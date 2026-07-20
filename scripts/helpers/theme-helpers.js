@@ -99,6 +99,24 @@ hexo.extend.helper.register("getPostUrl", function (rootUrl, path) {
   }
 });
 
+hexo.extend.helper.register("shouldLoadKatex", function (page, config = {}) {
+  if (config.enable !== true || page?.katex === false) {
+    return false;
+  }
+
+  if (page?.katex === true) {
+    return true;
+  }
+
+  if (config.per_page !== true) {
+    return false;
+  }
+
+  const isPost = typeof this.is_post === "function" && this.is_post();
+  const isPage = typeof this.is_page === "function" && this.is_page();
+  return isPost || isPage;
+});
+
 hexo.extend.helper.register("renderJS", function (path, options = {}) {
   const _js = hexo.extend.helper.get("js").bind(hexo);
   const { module = false, async = false, swupReload = false } = options;

@@ -1,10 +1,19 @@
 import {
+  getDefaultThemeMode,
   getStyleStatus,
+  normalizeThemeMode,
+  resolveThemeMode,
   styleStatus,
   updateStyleStatus,
 } from "../state/styleStatus.js";
 
 const mermaidSelector = ".mermaid";
+const themeModes = ["auto", "light", "dark"];
+const themeModeIcons = {
+  auto: "fa-regular fa-display",
+  light: "fa-regular fa-sun",
+  dark: "fa-regular fa-moon",
+};
 let didInitAuto = false;
 
 const ensureOriginalData = () => {
@@ -31,6 +40,65 @@ export const ModeToggle = {
   mermaidLightTheme: null,
   mermaidDarkTheme: null,
 
+  getThemeMode(storedStatus) {
+    if (themeModes.includes(storedStatus?.themeMode)) {
+      return storedStatus.themeMode;
+    }
+
+    // Preserve the user's explicit preference from versions that only stored
+    // isDark. New installs use the configured default, which is usually auto.
+    if (typeof storedStatus?.isDark === "boolean") {
+      return storedStatus.isDark ? "dark" : "light";
+    }
+
+    return getDefaultThemeMode();
+  },
+
+  updateModeToggleButton(mode) {
+    if (this.iconDom) {
+      this.iconDom.className = themeModeIcons[mode];
+    }
+
+    if (!this.modeToggleButton_dom) {
+      return;
+    }
+
+    const labelKey = `mode${mode[0].toUpperCase()}${mode.slice(1)}Label`;
+    const label = this.modeToggleButton_dom.dataset[labelKey] || mode;
+    this.modeToggleButton_dom.dataset.themeMode = mode;
+    this.modeToggleButton_dom.setAttribute("aria-label", label);
+    this.modeToggleButton_dom.setAttribute(
+      "aria-pressed",
+      mode === "auto" ? "mixed" : String(mode === "dark"),
+    );
+    this.modeToggleButton_dom.title = label;
+  },
+
+  setThemeMode(mode) {
+    const normalizedMode = normalizeThemeMode(mode, getDefaultThemeMode());
+    const isDark = resolveThemeMode(normalizedMode);
+    const didResolvedThemeChange = styleStatus.isDark !== isDark;
+    const resolvedTheme = isDark ? "dark" : "light";
+
+    document.body?.classList.remove("light-mode", "dark-mode");
+    document.body?.classList.add(`${resolvedTheme}-mode`);
+    document.documentElement.classList.remove("light", "dark");
+    document.documentElement.classList.add(resolvedTheme);
+    document.documentElement.style.colorScheme = resolvedTheme;
+    document.documentElement.dataset.themeMode = normalizedMode;
+
+    this.updateModeToggleButton(normalizedMode);
+    updateStyleStatus({ themeMode: normalizedMode, isDark });
+
+    if (!didResolvedThemeChange) {
+      return;
+    }
+
+    this.mermaidInit(isDark ? this.mermaidDarkTheme : this.mermaidLightTheme);
+    this.setGiscusTheme();
+    this.setUtterancesTheme();
+  },
+
   mermaidInit(theme) {
     if (!window.mermaid) {
       return;
@@ -43,31 +111,15 @@ export const ModeToggle = {
   },
 
   enableLightMode() {
-    document.body.classList.remove("dark-mode");
-    document.documentElement.classList.remove("dark");
-    document.body.classList.add("light-mode");
-    document.documentElement.classList.add("light");
-    if (this.iconDom) {
-      this.iconDom.className = "fa-regular fa-moon";
-    }
-    updateStyleStatus({ isDark: false });
-    this.mermaidInit(this.mermaidLightTheme);
-    this.setGiscusTheme();
-    this.setUtterancesTheme();
+    this.setThemeMode("light");
   },
 
   enableDarkMode() {
-    document.body.classList.remove("light-mode");
-    document.documentElement.classList.remove("light");
-    document.body.classList.add("dark-mode");
-    document.documentElement.classList.add("dark");
-    if (this.iconDom) {
-      this.iconDom.className = "fa-regular fa-brightness";
-    }
-    updateStyleStatus({ isDark: true });
-    this.mermaidInit(this.mermaidDarkTheme);
-    this.setGiscusTheme();
-    this.setUtterancesTheme();
+    this.setThemeMode("dark");
+  },
+
+  enableAutoMode() {
+    this.setThemeMode("auto");
   },
 
   async setGiscusTheme(theme) {
@@ -136,14 +188,7 @@ export const ModeToggle = {
 
   initModeStatus() {
     const storedStatus = getStyleStatus();
-
-    if (storedStatus) {
-      storedStatus.isDark ? this.enableDarkMode() : this.enableLightMode();
-    } else {
-      this.isDarkPrefersColorScheme().matches
-        ? this.enableDarkMode()
-        : this.enableLightMode();
-    }
+    this.setThemeMode(this.getThemeMode(storedStatus));
   },
 
   initModeToggleButton(signal) {
@@ -152,14 +197,30 @@ export const ModeToggle = {
     }
 
     const handler = () => {
-      const isDark = document.body.classList.contains("dark-mode");
-      isDark ? this.enableLightMode() : this.enableDarkMode();
+      const currentMode = normalizeThemeMode(
+        styleStatus.themeMode,
+        getDefaultThemeMode(),
+      );
+      const currentIndex = themeModes.indexOf(currentMode);
+      const nextMode = themeModes[(currentIndex + 1) % themeModes.length];
+      this.setThemeMode(nextMode);
+    };
+    const keyboardHandler = (event) => {
+      if (event.key !== "Enter" && event.key !== " ") {
+        return;
+      }
+      event.preventDefault();
+      handler();
     };
 
     if (signal) {
       this.modeToggleButton_dom.addEventListener("click", handler, { signal });
+      this.modeToggleButton_dom.addEventListener("keydown", keyboardHandler, {
+        signal,
+      });
     } else {
       this.modeToggleButton_dom.addEventListener("click", handler);
+      this.modeToggleButton_dom.addEventListener("keydown", keyboardHandler);
     }
   },
 
@@ -170,8 +231,10 @@ export const ModeToggle = {
     }
 
     didInitAuto = true;
-    const handler = (event) => {
-      event.matches ? this.enableDarkMode() : this.enableLightMode();
+    const handler = () => {
+      if (styleStatus.themeMode === "auto") {
+        this.enableAutoMode();
+      }
     };
 
     if (appSignal) {

@@ -129,3 +129,15 @@ ago:
 create_time: 撰寫
 update_time: 更新
 expired: "這篇文章最後更新於 %s 天前，內容可能已經過時。"
+edit_post: 編輯文章
+native_share: 系統分享
+copy_link: 複製連結
+link_copied: 連結已複製
+reward: 贊助
+series: 文章系列
+read_mode: 閱讀模式
+exit_read_mode: 離開閱讀模式
+theme_mode:
+  auto: "主題：跟隨系統"
+  light: "主題：淺色"
+  dark: "主題：深色"

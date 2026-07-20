@@ -127,3 +127,15 @@ ago:
 create_time: Creado
 update_time: Actualizado
 expired: "Esta publicación fue escrita hace %s días, el contenido puede no estar actualizado."
+edit_post: Editar publicación
+native_share: Compartir desde el dispositivo
+copy_link: Copiar enlace
+link_copied: Enlace copiado
+reward: Patrocinar
+series: Serie
+read_mode: Modo lectura
+exit_read_mode: Salir del modo lectura
+theme_mode:
+  auto: "Tema: Seguir el sistema"
+  light: "Tema: Claro"
+  dark: "Tema: Oscuro"

@@ -1,0 +1,84 @@
+<%
+const postEditConfig = theme.articles?.post_edit || {};
+const shareConfig = theme.articles?.share || {};
+const rewardConfig = theme.articles?.reward || {};
+const editUrl = getPostEditUrl(page, postEditConfig);
+const shareEnabled = shareConfig.enable === true && page.share !== false;
+const rewardItems = Array.isArray(rewardConfig.items)
+  ? rewardConfig.items.filter((item) => item && item.image)
+  : [];
+const rewardEnabled = rewardConfig.enable === true && page.reward !== false && rewardItems.length > 0;
+const shareServices = Array.isArray(shareConfig.services)
+  ? [...new Set(shareConfig.services.map((service) => String(service).toLowerCase()))]
+  : [];
+const absoluteUrl = getPostUrl((theme.info.url || config.url), page.path);
+const encodedUrl = encodeURIComponent(absoluteUrl);
+const encodedTitle = encodeURIComponent(page.title || theme.info.title || config.title || "");
+const shareLinks = {
+  weibo: `https://service.weibo.com/share/share.php?url=${encodedUrl}&title=${encodedTitle}`,
+  x: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`,
+  facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+  telegram: `https://t.me/share/url?url=${encodedUrl}&text=${encodedTitle}`,
+  qq: `https://connect.qq.com/widget/shareqq/index.html?url=${encodedUrl}&title=${encodedTitle}`,
+};
+const shareIcons = {
+  weibo: "fa-brands fa-weibo",
+  x: "fa-brands fa-twitter",
+  facebook: "fa-brands fa-facebook-f",
+  telegram: "fa-brands fa-telegram",
+  qq: "fa-brands fa-qq",
+};
+%>
+
+<% if (editUrl || shareEnabled || rewardEnabled) { %>
+<div class="article-actions px-2 sm:px-6 md:px-8" data-share-title="<%= page.title %>" data-share-url="<%= absoluteUrl %>">
+  <% if (editUrl) { %>
+  <a class="article-action-item post-edit-link" href="<%= editUrl %>" target="_blank" rel="noopener noreferrer">
+    <i class="fa-regular fa-pen-to-square" aria-hidden="true"></i>
+    <span><%= __('edit_post') %></span>
+  </a>
+  <% } %>
+
+  <% if (shareEnabled && shareServices.length) { %>
+  <div class="post-share" aria-label="<%= __('share') %>">
+    <span class="post-share-label"><i class="fa-regular fa-share-nodes" aria-hidden="true"></i><%= __('share') %></span>
+    <div class="post-share-services">
+      <% shareServices.forEach((service) => { %>
+        <% if (service === 'native') { %>
+        <button class="article-action-icon post-share-action" type="button" data-share-service="native" title="<%= __('native_share') %>" aria-label="<%= __('native_share') %>">
+          <i class="fa-regular fa-arrow-up-from-bracket" aria-hidden="true"></i>
+        </button>
+        <% } else if (service === 'copy') { %>
+        <button class="article-action-icon post-share-action" type="button" data-share-service="copy" title="<%= __('copy_link') %>" aria-label="<%= __('copy_link') %>">
+          <i class="fa-regular fa-link" aria-hidden="true"></i>
+        </button>
+        <% } else if (shareLinks[service]) { %>
+        <a class="article-action-icon" href="<%= shareLinks[service] %>" target="_blank" rel="noopener noreferrer" title="<%= service %>" aria-label="<%= service %>">
+          <i class="<%= shareIcons[service] %>" aria-hidden="true"></i>
+        </a>
+        <% } %>
+      <% }); %>
+    </div>
+  </div>
+  <% } %>
+
+  <% if (rewardEnabled) { %>
+  <details class="post-reward">
+    <summary class="article-action-item">
+      <i class="fa-regular fa-qrcode" aria-hidden="true"></i>
+      <span><%= rewardConfig.text || __('reward') %></span>
+    </summary>
+    <ul class="reward-items">
+      <% rewardItems.forEach((item) => { %>
+      <li class="reward-item">
+        <a href="<%= url_for(item.link || item.image) %>" target="_blank" rel="noopener noreferrer">
+          <img src="<%= url_for(item.image) %>" alt="<%= item.name || __('reward') %>" loading="lazy">
+        </a>
+        <span><%= item.name || __('reward') %></span>
+      </li>
+      <% }); %>
+    </ul>
+  </details>
+  <% } %>
+</div>
+<% } %>

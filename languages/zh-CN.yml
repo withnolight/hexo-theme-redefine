@@ -130,3 +130,15 @@ ago:
 create_time: 创建
 update_time: 更新
 expired: "这篇文章最后更新于 %s 天前，内容可能已经过时。"
+edit_post: 编辑文章
+native_share: 系统分享
+copy_link: 复制链接
+link_copied: 链接已复制
+reward: 赞赏
+series: 文章系列
+read_mode: 阅读模式
+exit_read_mode: 退出阅读模式
+theme_mode:
+  auto: "主题：跟随系统"
+  light: "主题：浅色"
+  dark: "主题：深色"

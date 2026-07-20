@@ -52,9 +52,12 @@ If you are also using Redefine, please go to [Redefine Theme Showcase](https://r
 
 - [Note Module](https://redefine-docs.ohevan.com/modules/notes)
 - [Friend Link Page](https://redefine-docs.ohevan.com/page_templates/friends)
-- [Mathjax Support](https://redefine-docs.ohevan.com/plugins/mathjax)
+- KaTeX math rendering with global and per-page loading
 - Code block language display
-- Light/Dark mode switching
+- Light/Dark/System mode switching
+- Distraction-free reading mode
+- Post edit, sharing, and sponsor actions
+- Post series grouping and `{% series %}` tag
 - [Font Awesome 6.2.1 Pro](https://redefine-docs.ohevan.com/basic/fontawesome) (contains different styles like Duotone/Regular/Thin/Sharp)
 - [Drop-down menu](https://redefine-docs.ohevan.com/dhome/navbar#%E9%93%BE%E6%8E%A5%E5%88%97%E8%A1%A8)
 - [Customizable footer](https://redefine-docs.ohevan.com/footer)

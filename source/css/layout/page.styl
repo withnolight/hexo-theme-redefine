@@ -123,10 +123,17 @@
       transform-origin right top
 
     +redefine-mobile()
-      display none
       top: ($navbar-height * 0.8 + $spacing-unit)
       right 5px
       transform scale(0.72)
+
+      if (hexo-config('articles.read_mode.enable') == true)
+        display block
+
+        .article-tools-list li:not(.tool-read-mode)
+          display none
+      else
+        display none
 
   .right-side-tools-container
     position fixed

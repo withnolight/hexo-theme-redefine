@@ -113,16 +113,26 @@
             }, '-=700');
 
 
-        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
-
-        // If the theme status is not found in local storage, check the preferred color scheme
-        if (themeStatus === undefined || themeStatus === null) {
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                themeStatus = 'dark';
-            } else {
-                themeStatus = 'light';
+        let storedThemeStatus = {};
+        try {
+            const parsedThemeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS') || '{}');
+            if (parsedThemeStatus && typeof parsedThemeStatus === 'object') {
+                storedThemeStatus = parsedThemeStatus;
             }
+        } catch (error) {
+            console.warn('Failed to read the stored theme mode:', error);
         }
+        const configuredThemeMode = <%- JSON.stringify(["auto", "light", "dark"].includes(theme.colors?.default_mode) ? theme.colors.default_mode : "auto") %>;
+        const themeMode = ['auto', 'light', 'dark'].includes(storedThemeStatus.themeMode)
+            ? storedThemeStatus.themeMode
+            : typeof storedThemeStatus.isDark === 'boolean'
+                ? (storedThemeStatus.isDark ? 'dark' : 'light')
+                : configuredThemeMode;
+        const themeStatus = themeMode === 'dark' || (
+            themeMode === 'auto' &&
+            window.matchMedia &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches
+        );
 
         // Now you can use the themeStatus variable in your code
         if (themeStatus) {

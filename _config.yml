@@ -40,8 +40,8 @@ colors:
   primary: "#A31F34"
   # Secondary color (TBD)
   secondary:
-  # Default theme mode initial value (will be overwritten by prefer-color-scheme)
-  default_mode: light # light, dark
+  # Default theme mode: auto follows the current device color scheme.
+  default_mode: auto # auto, light, dark
 # COLORS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< end
 
 
@@ -349,6 +349,46 @@ articles:
     placeholder: /images/wallhaven-wqery6-light.webp
     # Skip directory
     skip_dirs: []
+  # Distraction-free reading mode. A toggle is shown in the post tools.
+  read_mode:
+    enable: true
+  # Link to edit the current Markdown source online.
+  post_edit:
+    enable: false
+    # Base URL, for example: https://github.com/user/repo/edit/main/source/
+    url:
+  # Post sharing. Set `share: false` in front-matter to disable it per post.
+  share:
+    enable: false
+    # Supported services: native, copy, weibo, x, facebook, telegram, qq
+    services:
+      - native
+      - copy
+      - weibo
+      - x
+      - facebook
+      - telegram
+  # Sponsor/reward QR codes. Set `reward: false` in front-matter to disable it per post.
+  reward:
+    enable: false
+    text:
+    items:
+      # - name: WeChat
+      #   image: /images/wechat-reward.png
+      #   link: # Optional payment link; defaults to the image URL
+      # - name: Alipay
+      #   image: /images/alipay-reward.png
+      #   link:
+  # Group posts by a shared `series` value in front-matter.
+  # Use `{% series %}` in a post to render the current series inline,
+  # or `{% series Series Name %}` to render a named series.
+  series:
+    enable: false
+    show_in_post: true
+    title:
+    order_by: date # date, title
+    order: 1 # 1 for ascending, -1 for descending
+    numbered: true
 # ARTICLE <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< end
 
 
@@ -475,6 +515,35 @@ plugins:
     theme:
       light: "default"
       dark: "dark"
+  # KaTeX math rendering. Use `katex: true/false` in front-matter to override per page.
+  katex:
+    enable: false
+    version: "0.18.1"
+    # true: load on every post/page unless front-matter sets `katex: false`
+    # false: load only when front-matter sets `katex: true`
+    per_page: true
+    # Load KaTeX's copy-tex extension so copied formulas preserve their TeX source.
+    copy_tex: false
+    throw_on_error: false
+    strict: warn # warn, ignore, error
+    # Custom macros, for example: "\\RR": "\\mathbb{R}"
+    macros: {}
+    # Optional asset base. Supports ${version}; leave empty to use jsDelivr.
+    # Example: https://cdn.example.com/katex@${version}/dist
+    cdn:
+    delimiters:
+      - left: "$$"
+        right: "$$"
+        display: true
+      - left: "\\["
+        right: "\\]"
+        display: true
+      - left: "\\("
+        right: "\\)"
+        display: false
+      - left: "$"
+        right: "$"
+        display: false
 # PLUGINS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< end
 
 

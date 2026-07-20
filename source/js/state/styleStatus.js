@@ -1,8 +1,31 @@
 const localStorageKey = "REDEFINE-THEME-STATUS";
+const themeModeValues = ["auto", "light", "dark"];
+
+export const normalizeThemeMode = (mode, fallback = "auto") => {
+  return themeModeValues.includes(mode) ? mode : fallback;
+};
+
+export const getDefaultThemeMode = () => {
+  return normalizeThemeMode(theme.colors?.default_mode);
+};
+
+export const isSystemDark = () => {
+  return Boolean(
+    window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches,
+  );
+};
+
+export const resolveThemeMode = (mode) => {
+  const normalizedMode = normalizeThemeMode(mode, getDefaultThemeMode());
+  return normalizedMode === "dark" || (normalizedMode === "auto" && isSystemDark());
+};
+
+const defaultThemeMode = getDefaultThemeMode();
 
 const defaultStyleStatus = {
   isExpandPageWidth: false,
-  isDark: theme.colors.default_mode && theme.colors.default_mode === "dark",
+  themeMode: defaultThemeMode,
+  isDark: resolveThemeMode(defaultThemeMode),
   fontSizeLevel: 0,
   isOpenPageAside: true,
 };

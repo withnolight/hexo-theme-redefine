@@ -67,11 +67,15 @@
 			<%- page.content %>
 		</div>
 
+		<%- partial('pages/post/article-actions') %>
+
 		<% if (theme.articles.copyright.enable || theme.articles.copyright === true) { %>
 		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
 			<%- partial('pages/post/article-copyright') %>
 		</div>
 		<% } %>
+
+		<%- partial('pages/post/article-series') %>
 
 		<% if (page?.tags?.length) { %>
 		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
