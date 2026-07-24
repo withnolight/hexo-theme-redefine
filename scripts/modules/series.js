@@ -1,6 +1,6 @@
 "use strict";
 
-const { findSeriesPosts } = require("../helpers/article-enhancement-helpers");
+const { findSeriesPosts } = require("../utils/series");
 const { html } = require("../utils/html");
 
 const escapeHtml = (value) => String(value ?? "")
