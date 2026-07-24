@@ -127,3 +127,15 @@ ago:
 create_time: 作成
 update_time: 更新
 expired: "この記事は %s 日前に最後に更新される"
+edit_post: 記事を編集
+native_share: 端末で共有
+copy_link: リンクをコピー
+link_copied: リンクをコピーしました
+reward: 支援する
+series: シリーズ
+read_mode: 閲覧モード
+exit_read_mode: 閲覧モードを終了
+theme_mode:
+  auto: "テーマ：システム設定"
+  light: "テーマ：ライト"
+  dark: "テーマ：ダーク"

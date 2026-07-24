@@ -1,0 +1,23 @@
+<%
+const seriesConfig = theme.articles?.series || {};
+const seriesPosts = page.series && seriesConfig.enable === true
+  ? getSeriesPosts(page, site.posts, seriesConfig)
+  : [];
+const seriesListTag = seriesConfig.numbered === false ? "ul" : "ol";
+%>
+
+<% if (seriesConfig.show_in_post !== false && seriesPosts.length > 0) { %>
+<section class="article-series mx-2 sm:mx-6 md:mx-8" aria-labelledby="article-series-title">
+  <h2 id="article-series-title">
+    <i class="fa-regular fa-layer-group" aria-hidden="true"></i>
+    <%= seriesConfig.title || page.series || __('series') %>
+  </h2>
+  <<%= seriesListTag %> class="series-items">
+    <% seriesPosts.forEach((post) => { %>
+    <li<%- post.path === page.path ? ' class="current" aria-current="page"' : '' %>>
+      <a href="<%= url_for(post.path) %>"><%= post.title %></a>
+    </li>
+    <% }); %>
+  </<%= seriesListTag %>>
+</section>
+<% } %>

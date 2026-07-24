@@ -127,3 +127,15 @@ ago:
 create_time: Created
 update_time: Updated
 expired: "This post is written %s days ago, and the content may not be up to date."
+edit_post: Edit post
+native_share: Share via device
+copy_link: Copy link
+link_copied: Link copied
+reward: Sponsor
+series: Series
+read_mode: Read mode
+exit_read_mode: Exit read mode
+theme_mode:
+  auto: "Theme: Follow system"
+  light: "Theme: Light"
+  dark: "Theme: Dark"

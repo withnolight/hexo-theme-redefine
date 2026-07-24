@@ -1,0 +1,206 @@
+@require '../../common/variables'
+
+.article-actions
+  display flex
+  align-items center
+  flex-wrap wrap
+  gap 10px
+  margin-top 18px
+
+  .article-action-item,
+  .post-share
+    min-height 38px
+    display inline-flex
+    align-items center
+    gap 8px
+    box-sizing border-box
+    border 1px solid var(--border-color)
+    border-radius $redefine-border-radius-small
+    background var(--second-background-color)
+    color var(--default-text-color)
+
+  .article-action-item
+    padding 8px 12px
+    cursor pointer
+    transition background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease
+
+    &:hover
+      border-color var(--primary-color)
+      background var(--primary-color)
+      color var(--background-color)
+
+      i
+        color var(--background-color)
+
+  .post-share
+    padding 4px 6px 4px 12px
+
+  .post-share-label
+    display inline-flex
+    align-items center
+    gap 8px
+
+  .post-share-services
+    display flex
+    align-items center
+    gap 4px
+
+  .article-action-icon
+    width 30px
+    height 30px
+    padding 0
+    border 0
+    border-radius $redefine-border-radius-xsmall
+    display inline-flex
+    justify-content center
+    align-items center
+    cursor pointer
+    background transparent
+    color var(--default-text-color)
+    transition background-color 0.2s ease, color 0.2s ease
+
+    &:hover,
+    &.success
+      background var(--primary-color)
+      color var(--background-color)
+
+      i
+        color var(--background-color)
+
+  .post-reward
+    position relative
+    margin 0
+
+    summary
+      list-style none
+
+      &::-webkit-details-marker
+        display none
+
+    &[open] summary
+      border-color var(--primary-color)
+
+  .reward-items
+    position absolute
+    z-index $z-index-2
+    right 0
+    bottom calc(100% + 10px)
+    min-width 180px
+    margin 0
+    padding 14px
+    display flex
+    justify-content center
+    gap 14px
+    list-style none
+    border 1px solid var(--border-color)
+    border-radius $redefine-border-radius-medium
+    background var(--background-color)
+    box-shadow var(--redefine-box-shadow)
+
+  .reward-item
+    width 120px
+    display flex
+    flex-direction column
+    align-items center
+    gap 6px
+    color var(--default-text-color)
+    text-align center
+
+    img
+      width 120px
+      height 120px
+      margin 0
+      object-fit cover
+      border-radius $redefine-border-radius-small
+
+  +redefine-mobile()
+    .post-share
+      width 100%
+      justify-content space-between
+
+    .reward-items
+      position fixed
+      left 50%
+      right auto
+      bottom 20px
+      max-width calc(100vw - 40px)
+      transform translateX(-50%)
+
+.article-series
+  margin-top 24px
+  padding 16px 18px
+  border 1px solid var(--border-color)
+  border-radius $redefine-border-radius-medium
+  background var(--second-background-color)
+
+  h2
+    margin 0 0 10px
+    display flex
+    align-items center
+    gap 8px
+    color var(--default-text-color)
+    font-size 1.1rem
+
+  .series-items
+    margin 0
+    padding-left 1.5rem
+
+    li
+      padding 4px 0
+      color var(--third-text-color)
+
+      &.current
+        color var(--primary-color)
+        font-weight 600
+
+      a
+        color inherit
+
+ol.series-items
+  list-style decimal
+
+ul.series-items
+  list-style disc
+
+.series-items
+  li
+    list-style inherit
+
+    &.current
+      color var(--primary-color)
+      font-weight 600
+
+body.read-mode
+  .main-content-header,
+  .main-content-footer,
+  .right-side-tools-container,
+  .toc-content-container,
+  .comment-container,
+  .article-nav,
+  .recommended-article,
+  .post-tools li:not(.tool-read-mode)
+    display none !important
+
+  .main-content-body,
+  .main-content,
+  .post-page-container,
+  .article-content-container
+    width 100% !important
+    max-width 100% !important
+
+  .main-content-body
+    padding-top 24px
+
+  .article-content-container
+    max-width 900px !important
+    margin 0 auto
+    box-shadow none !important
+
+  .post-tools
+    top 24px !important
+
+  .tool-read-mode
+    background var(--primary-color)
+
+    i
+      color var(--background-color)

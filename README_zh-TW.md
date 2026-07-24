@@ -53,9 +53,12 @@
 
 - [筆記模塊](https://redefine-docs.ohevan.com/modules/notes)
 - [友鏈樣式](https://redefine-docs.ohevan.com/page_templates/friends)
-- [數學公式](https://redefine-docs.ohevan.com/plugins/mathjax)
+- KaTeX 數學公式渲染，支援全站或按頁面載入
 - 代碼塊語言顯示
-- Light/Dark 模式切換
+- Light/Dark/System 模式切換
+- 沉浸式閱讀模式
+- 文章編輯、分享與贊助操作
+- 文章系列分組與 `{% series %}` 標籤
 - [Font Awesome 6.2.1 Pro](https://redefine-docs.ohevan.com/basic/fontawesome)（包含 Duotone/Regular/Thin 等不同樣式）
 - [下拉菜單](https://redefine-docs.ohevan.com/dhome/navbar#%E9%93%BE%E6%8E%A5%E5%88%97%E8%A1%A8)
 - [可自定義頁腳](https://redefine-docs.ohevan.com/footer)

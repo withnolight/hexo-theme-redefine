@@ -52,9 +52,12 @@
 
 - [笔记模块](https://redefine-docs.ohevan.com/modules/notes)
 - [友链样式](https://redefine-docs.ohevan.com/page_templates/friends)
-- [数学公式](https://redefine-docs.ohevan.com/plugins/mathjax)
+- KaTeX 数学公式渲染，支持全站或按页面加载
 - 代码块语言显示
-- Light/Dark 模式切换
+- Light/Dark/System 模式切换
+- 沉浸式阅读模式
+- 文章编辑、分享与赞赏操作
+- 文章系列分组与 `{% series %}` 标签
 - [Font Awesome 6.2.1 Pro](https://redefine-docs.ohevan.com/basic/fontawesome)（包含 Duotone/Regular/Thin 等不同样式）
 - [下拉菜单](https://redefine-docs.ohevan.com/dhome/navbar#%E9%93%BE%E6%8E%A5%E5%88%97%E8%A1%A8)
 - [可自定义页脚](https://redefine-docs.ohevan.com/footer)

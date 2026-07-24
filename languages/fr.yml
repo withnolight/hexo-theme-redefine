@@ -127,3 +127,15 @@ ago:
 create_time: Créé
 update_time: Mis à jour
 expired: "Ce message a été écrit il y a %s jours et son contenu peut être obsolète."
+edit_post: Modifier l’article
+native_share: Partager via l’appareil
+copy_link: Copier le lien
+link_copied: Lien copié
+reward: Soutenir
+series: Série
+read_mode: Mode lecture
+exit_read_mode: Quitter le mode lecture
+theme_mode:
+  auto: "Thème : suivre le système"
+  light: "Thème : clair"
+  dark: "Thème : sombre"

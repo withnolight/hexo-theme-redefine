@@ -7,10 +7,12 @@ import initLazyLoad from "./layouts/lazyload.js";
 import { initTOC } from "./layouts/toc.js";
 import { navbarShrink } from "./layouts/navbarShrink.js";
 import initMasonry from "./plugins/masonry.js";
+import initKatex from "./plugins/katex.js";
 import initMermaid from "./plugins/mermaid.js";
 import initPangu from "./plugins/pangu.js";
 import initTabs from "./plugins/tabs.js";
 import initTyped from "./plugins/typed.js";
+import initArticleEnhancements from "./tools/articleEnhancements.js";
 import initCopyCode from "./tools/codeBlock.js";
 import initExpirationDate from "./tools/expirationDate.js";
 import initModeToggle from "./tools/lightDarkSwitch.js";
@@ -145,6 +147,12 @@ const initPage = () => {
     }
   });
 
+  safeRun("katex", () => {
+    if (theme.plugins?.katex?.enable) {
+      initKatex();
+    }
+  });
+
   safeRun("masonry", () => {
     initMasonry({ signal: pageSignal });
   });
@@ -176,6 +184,10 @@ const initPage = () => {
     if (theme.articles?.code_block?.copy === true) {
       initCopyCode();
     }
+  });
+
+  safeRun("articleEnhancements", () => {
+    initArticleEnhancements({ signal: pageSignal });
   });
 
   safeRun("lazyload", () => {

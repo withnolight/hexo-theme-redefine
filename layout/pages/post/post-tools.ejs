@@ -1,5 +1,12 @@
 <div class="post-tools-container">
 	<ul class="article-tools-list">
+		<!-- distraction-free reading mode -->
+		<% if (theme.articles?.read_mode?.enable === true) { %>
+		<li class="tool-read-mode" role="button" tabindex="0" aria-pressed="false" title="<%= __('read_mode') %>" aria-label="<%= __('read_mode') %>" data-read-mode-label="<%= __('read_mode') %>" data-exit-read-mode-label="<%= __('exit_read_mode') %>">
+			<i class="fa-regular fa-book-open-reader"></i>
+		</li>
+		<% } %>
+
 		<!-- TOC aside toggle -->
 		<% if (theme.articles.toc.enable) { %>
 		<li class="right-bottom-tools page-aside-toggle">
