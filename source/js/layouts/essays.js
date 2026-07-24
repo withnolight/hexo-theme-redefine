@@ -9,7 +9,7 @@ export default function initEssays() {
     const rawDate = element.getAttribute("data-date");
     const locale = config.language || "en";
 
-    const formattedDate = moment(rawDate).locale(locale).calendar();
+    const formattedDate = moment(rawDate).local().locale(locale).calendar();
     element.textContent = formattedDate;
   });
 }
