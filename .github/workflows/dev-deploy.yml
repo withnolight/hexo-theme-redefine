@@ -96,11 +96,11 @@ jobs:
 
         # Install Vercel CLI first to avoid bug with next step
       - name: Install Vercel CLI
-        run: npm install -g vercel@22.0.1
+        run: npm install -g vercel@latest
 
       - name: Deploy to Vercel Action
         id: deploy-to-vercel
-        uses: EvanNotFound/vercel-deployment-for-github-actions@v1.2.0
+        uses: EvanNotFound/vercel-deployment-for-github-actions@v1.2.2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
